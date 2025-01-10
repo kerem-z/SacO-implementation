@@ -10,6 +10,7 @@
 
 
 
+
 1. [Introduction](#1-introduction)
    - [Vision Transformers](#11-vision-transformers-and-their-rise)
    - [Explainable AI in Vision Transformers](#12-explainable-ai-and-vision-transformers)
@@ -449,7 +450,7 @@ The evaluation involved systematic perturbations:
 
 ### **3.2 Results**
 
-
+#### **3.2.1 Salience Maps**
 The salience maps generated for the ImageNet example (Class 12, ID: 00006597) using different explanation methods are presented below. The original image is included for reference, and each salience map highlights different regions of interest based on the explanation method.
 
 <div align="center">
@@ -526,11 +527,100 @@ The following graphs illustrate the salience scores for the ImageNet example (Cl
   </table>
 </div>
 
----
 
 
 
 The salience score graphs complement the salience maps by providing a quantitative view of the importance assigned to different image regions.
+
+---
+
+#### **3.2.3 Comparison with Paper (Transformer Attribution)**
+
+To validate the implementation and evaluate the consistency of results, a comparison is made between the salience maps, salience scores, and confidence change graphs generated in this project and those reported in the original paper for the Transformer Attribution method. This comparison highlights the alignment between the reproduced and original findings.
+
+
+
+<div align="center">
+  <table>
+    <tr>
+        <td align="center">
+          <img src="assets/linnet-transformer-attribute-saliencemap.png" alt="Reproduced Transformer Attribution Salience Map" width="200">
+          <p style="font-size: 12px; font-style: italic;">Figure 6a: Reproduced Salience Map</p>
+        </td>
+        <td align="center">
+          <img src="assets/paper-tattr.png" alt="Paper Transformer Attribution Salience Map" width="200">
+          <p style="font-size: 12px; font-style: italic;">Figure 6b: Paper Salience Map</p>
+        </td>
+    </tr>
+    <tr>
+        <td align="center">
+          <img src="assets/transformer-attributer-salience-scores.png" alt="Reproduced Transformer Attribution Salience Scores" width="200">
+          <p style="font-size: 12px; font-style: italic;">Figure 6c: Reproduced Salience Scores</p>
+        </td>
+        <td align="center">
+          <img src="assets/paper-tatt-score.png" alt="Paper Transformer Attribution Salience Scores" width="200">
+          <p style="font-size: 12px; font-style: italic;">Figure 6d: Paper Salience Scores</p>
+        </td>
+    </tr>
+    <tr>
+        <td align="center">
+          <img src="assets/transformer-attributer-confidence-change.png" alt="Reproduced Confidence Change" width="200">
+          <p style="font-size: 12px; font-style: italic;">Figure 6e: Reproduced Confidence Change</p>
+        </td>
+        <td align="center">
+          <img src="assets/paper-tatt-conf.png" alt="Paper Confidence Change" width="200">
+          <p style="font-size: 12px; font-style: italic;">Figure 6f: Paper Confidence Change</p>
+        </td>
+    </tr>
+  </table>
+</div>
+
+---
+#### **3.2.4 Comparison with Paper (Random Attribution)**
+
+In this subsection, we compare the salience maps, salience scores, and confidence change graphs for **Random Attribution** generated in this project with the corresponding results from the original paper. This comparison is intended to further validate the implementation and consistency of results across different explanation methods.
+
+
+
+<div align="center">
+  <table>
+    <tr>
+        <td align="center">
+          <img src="assets/random attribution salience map.png" alt="Reproduced Random Attribution Salience Map" width="200">
+          <p style="font-size: 12px; font-style: italic;">Figure 7a: Reproduced Salience Map</p>
+        </td>
+        <td align="center">
+          <img src="assets/paper-random.png" alt="Paper Random Attribution Salience Map" width="200">
+          <p style="font-size: 12px; font-style: italic;">Figure 7b: Paper Salience Map</p>
+        </td>
+    </tr>
+    <tr>
+        <td align="center">
+          <img src="assets/random-attribution-salience-scores.png" alt="Reproduced Random Attribution Salience Scores" width="200">
+          <p style="font-size: 12px; font-style: italic;">Figure 7c: Reproduced Salience Scores</p>
+        </td>
+        <td align="center">
+          <img src="assets/paper-random-score.png" alt="Paper Random Attribution Salience Scores" width="200">
+          <p style="font-size: 12px; font-style: italic;">Figure 7d: Paper Salience Scores</p>
+        </td>
+    </tr>
+    <tr>
+        <td align="center">
+          <img src="assets/random_attribution-confidence-change.png" alt="Reproduced Random Attribution Confidence Change" width="200">
+          <p style="font-size: 12px; font-style: italic;">Figure 7e: Reproduced Confidence Change</p>
+        </td>
+        <td align="center">
+          <img src="assets/paper-random-conf.png" alt="Paper Random Attribution Confidence Change" width="200">
+          <p style="font-size: 12px; font-style: italic;">Figure 7f: Paper Confidence Change</p>
+        </td>
+    </tr>
+  </table>
+</div>
+
+---
+
+
+---
 
 
 
