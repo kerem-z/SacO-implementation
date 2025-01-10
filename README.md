@@ -447,63 +447,90 @@ The evaluation involved systematic perturbations:
 
 ---
 
-#### **3.2 Results**
-
-The evaluation results highlight the effectiveness of the implemented explanation methods when tested on various datasets and models. As a case study, the following example from the ImageNet dataset was analyzed using the proposed **Salience-guided Faithfulness Coefficient (SaCo)** and other metrics.
-
-<div align="center" style="border: 1px solid #ddd; padding: 10px; border-radius: 5px; background-color: #f9f9f9;">
-    <img src="assets/ILSVRC2012_val_00006597.jpg" alt="ImageNet Example: Class 12" width="400" height="300">
-    <p style="font-size: 14px; font-style: italic; margin-top: 5px;">
-        Figure 4: Example image from ImageNet (Class 12, ID: 00006597). This image was used in the paper's case study to evaluate the performance of the explanation methods.
-    </p>
-</div>
-
----
+### **3.2 Results**
 
 
-The salience maps generated for the ImageNet example (Class 12, ID: 00006597) using different explanation methods are presented below. Each method provides unique insights into the decision-making process of the Vision Transformer model.
+The salience maps generated for the ImageNet example (Class 12, ID: 00006597) using different explanation methods are presented below. The original image is included for reference, and each salience map highlights different regions of interest based on the explanation method.
 
 <div align="center">
   <table>
     <tr>
         <td align="center">
-        <img src="assets/ILSVRC2012_val_00006597.jpg" alt="Original Image " width="200">
-        <p style="font-size: 12px; font-style: italic;">Figure 5a: Grad-CAM Salience Map</p>
+        <img src="assets/ILSVRC2012_val_00006597.jpg" alt="Original Image" width="200">
+        <p style="font-size: 12px; font-style: italic;">Figure 4a: Original Image</p>
       </td>
       <td align="center">
         <img src="assets/linnet-gradcam-saliancemap.jpg" alt="Grad-CAM Salience Map" width="200">
-        <p style="font-size: 12px; font-style: italic;">Figure 5a: Grad-CAM Salience Map</p>
+        <p style="font-size: 12px; font-style: italic;">Figure 4b: Grad-CAM Salience Map</p>
       </td>
       <td align="center">
         <img src="assets/linnet-transformer-attribute-saliencemap.png" alt="Transformer Attribution Salience Map" width="200">
-        <p style="font-size: 12px; font-style: italic;">Figure 5b: Transformer Attribution Salience Map</p>
-      </td>
-      <td align="center">
-        <img src="assets/transformer-mm-salience-map.png" alt="Transformer-MM Salience Map" width="200">
-        <p style="font-size: 12px; font-style: italic;">Figure 5c: Transformer-MM Salience Map</p>
+        <p style="font-size: 12px; font-style: italic;">Figure 4c: Transformer Attribution Salience Map</p>
       </td>
     </tr>
     <tr>
       <td align="center">
+        <img src="assets/transformer-mm-salience-map.png" alt="Transformer-MM Salience Map" width="200">
+        <p style="font-size: 12px; font-style: italic;">Figure 4d: Transformer-MM Salience Map</p>
+      </td>
+      <td align="center">
         <img src="assets/LRP-salience-map.png" alt="LRP Salience Map" width="200">
-        <p style="font-size: 12px; font-style: italic;">Figure 5d: Layer-wise Relevance Propagation (LRP) Salience Map</p>
+        <p style="font-size: 12px; font-style: italic;">Figure 4e: Layer-wise Relevance Propagation (LRP) Salience Map</p>
       </td>
       <td align="center">
         <img src="assets/random attribution salience map.png" alt="Random Attribution Salience Map" width="200">
-        <p style="font-size: 12px; font-style: italic;">Figure 5e: Random Attribution Salience Map</p>
+        <p style="font-size: 12px; font-style: italic;">Figure 4f: Random Attribution Salience Map</p>
       </td>
+    </tr>
+  </table>
+</div>
+
+
+
+The adjacent salience maps allow for a direct comparison of the interpretability of various explanation methods. Key observations include:
+- Grad-CAM (Figure 4b) and Transformer-MM (Figure 4c) highlight distinct image regions, aligning well with the model's predictions.
+- Layer-wise Relevance Propagation (Figure 4d) provides fine-grained salience details, while Random Attribution (Figure 4e) lacks meaningful focus, serving as a baseline comparison.
+
+---
+
+#### **3.2.2 Salience Scores**
+
+The following graphs illustrate the salience scores for the ImageNet example (Class 12, ID: 00006597) generated using different explanation methods. These scores quantify the contribution of specific image regions to the model's predictions.
+
+<div align="center">
+  <table>
+    <tr>
+        <td align="center">
+          <img src="assets/gradcam-salience.png" alt="Grad-CAM Salience Scores" width="200">
+          <p style="font-size: 12px; font-style: italic;">Figure 5a: Grad-CAM Salience Scores</p>
+        </td>
+        <td align="center">
+          <img src="assets/LRP-salience-scores.png" alt="LRP Salience Scores" width="200">
+          <p style="font-size: 12px; font-style: italic;">Figure 5b: LRP Salience Scores</p>
+        </td>
+        <td align="center">
+          <img src="assets/random-attribution-salience-scores.png" alt="Random Attribution Salience Scores" width="200">
+          <p style="font-size: 12px; font-style: italic;">Figure 5c: Random Attribution Salience Scores</p>
+        </td>
+    </tr>
+    <tr>
+        <td align="center">
+          <img src="assets/transformer-attributer-salience-scores.png" alt="Transformer Attribution Salience Scores" width="200">
+          <p style="font-size: 12px; font-style: italic;">Figure 5d: Transformer Attribution Salience Scores</p>
+        </td>
+        <td align="center">
+          <img src="assets/transformer-mm-salience-scores.png" alt="Transformer-MM Salience Scores" width="200">
+          <p style="font-size: 12px; font-style: italic;">Figure 5e: Transformer-MM Salience Scores</p>
+        </td>
     </tr>
   </table>
 </div>
 
 ---
 
-The adjacent salience maps allow for a direct comparison of the interpretability of various explanation methods. Key observations include:
-- Grad-CAM (Figure 5a) and Transformer-MM (Figure 5c) highlight distinct image regions, aligning well with the model's predictions.
-- Layer-wise Relevance Propagation (Figure 5d) provides fine-grained salience details, while Random Attribution (Figure 5e) lacks meaningful focus, serving as a baseline comparison.
 
-These results emphasize the strengths and limitations of each explanation method when applied to Vision Transformers.
 
+The salience score graphs complement the salience maps by providing a quantitative view of the importance assigned to different image regions.
 
 
 
