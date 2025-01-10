@@ -18,7 +18,7 @@
    - [Project Goals](#14-my-goal)
 2. [Methodology](#2-the-method-and-our-interpretation)
    - [The Paper’s Approach](#21-methodology-the-papers-approach)
-   - [My Interpretation](#22-our-interpretation-evaluating-saco-and-suggestions-for-improvement)
+   - [My Interpretation](#22-my-interpretation-evaluating-saco-and-suggestions-for-improvement)
 3. [Experiments and Results](#3-experiments-and-results)
    - [Experimental Setup](#31-experimental-setup)
    - [Results](#32-results)
@@ -620,13 +620,95 @@ In this subsection, we compare the salience maps, salience scores, and confidenc
 ---
 
 
+#### **3.2.5 Large-Scale Experiments**
+
+In addition to the case study, we conducted large-scale experiments across **CIFAR-10**, **CIFAR-100**, and **ImageNet** datasets. The results from these experiments are summarized in **Figure 4**, comparing **SaCo** with other metrics.
+
+**Findings**:
+- **SaCo** consistently scores **Random Attribution** near zero, differentiating it from other explanation methods, even outperforming some state-of-the-art methods.
+- Other metrics, such as **AOPC**, **LOdds**, and **AUC**, struggle with **Random Attribution**, giving misleadingly high scores despite its randomness.
+- **I.G.** performs inconsistently across different metrics, particularly with the reversal of perturbation order, highlighting the sensitivity of current metrics to hyperparameters.
+
+**Conclusion**:
+- **SaCo** provides a more consistent and reliable evaluation metric compared to existing methods, setting a robust benchmark for the evaluation of explanation methods in Vision Transformers.
+
+
+<div align="center">
+  <img src="assets/dataset comp.png" alt="Comparison Graph of Explanation Methods" width="700" height="400">
+  <p style="font-size: 12px; font-style: italic;">Figure 6: Comparison of explanation methods across CIFAR-10, CIFAR-100, and ImageNet datasets. **SaCo** provides consistent and meaningful results, while other metrics such as AOPC and LOdds*show inconsistency and misleading evaluations for methods like Random Attribution.</p>
+</div>
+
 ---
 
+### 3.2.6 Effects of Designs in Explanation Methods**
+
+In this section, we investigate the impact of design choices in attention-based explanation methods that aim to improve the alignment with the **faithfulness core assumption**. Attention-based methods have been shown to outperform other methods due to the intrinsic relevance of attention mechanisms in **Vision Transformers (ViTs)**. We hypothesize that utilizing well-designed aggregation rules and incorporating auxiliary information, such as gradient information, can improve the faithfulness of explanations. 
+
+To validate this hypothesis, we conducted ablation experiments on four variations of attention-based explanation methods:
+
+1. **Utilizing Attention Weights in the Final Layer**.
+2. **Aggregating Attention Information Across All Layers**.
+3. **Incorporating the Final Layer’s Attention Weights with Gradient Information**.
+4. **Integrating Gradient Information Across All Layers**.
+
+The results, shown in Table 1, provide clear evidence that incorporating gradient information and aggregating attention across layers substantially improves the faithfulness scores, confirming the importance of these elements for Vision Transformer interpretability.
+
+---
+
+#### **Table 1: Ablative Study on Attention-Based Explanation Methods**
+
+| Model Variant | Cross-layer Aggregation | Gradient | SaCo Score |
+|----------------|-------------------------|----------|------------|
+| **Vanilla Attention (No aggregation)** | X | X | 0.1835 |
+| **Attention (Final Layer)** | X | ✓ | 0.2453 |
+| **Aggregated Attention Across Layers** | ✓ | X | 0.3783 |
+| **Aggregated Attention with Gradient Information** | ✓ | ✓ | 0.4558 |
+
+As illustrated, the integration of gradient information, especially when combined with cross-layer aggregation, shows a significant improvement in the **SaCo** score, suggesting that these enhancements enable more faithful model explanations.
+
+---
+
+### 3.2.7 Further Evaluation on the Role of Attention-Based Methods**
+
+We now analyze the performance of attention-based explanation methods across different values of **K** (the number of pixel subsets), as shown in Table 2. The results are averaged over three Vision Transformer models on **ImageNet**.
+
+---
+
+#### **Table 2: Performance of Explanation Methods on SaCo**
+
+| K Value | I.G. | Grad-CAM | LRP | P. LRP | Trans. Attr. | Con. LRP | Raw Att. | Rollout | Trans. MM | ATTCAT |
+|---------|------|----------|-----|--------|--------------|----------|----------|---------|-----------|--------|
+| **5**   | 0.1585 | 0.1659   | 0.0246 | 0.4628 | 0.5680      | 0.0544   | 0.3200   | 0.3372  | 0.6041    | 0.3178 |
+| **10**  | 0.1647 | 0.1142   | 0.0120 | 0.3066 | 0.3902      | 0.0155   | 0.1835   | 0.2453  | 0.4558    | 0.3629 |
+| **20**  | 0.1785 | 0.1000   | 0.0054 | 0.2282 | 0.2906      | -0.0201  | 0.1411   | 0.1956  | 0.3651    | 0.3617 |
+
+From the table, it is evident that as **K** increases (i.e., a finer granularity of subsets), the **SaCo** scores for most methods improve, indicating better alignment with the core assumption of faithfulness. Among the attention-based methods, **Transformer Attribution** and **Transformer MM** consistently achieve higher scores, reinforcing the effectiveness of attention aggregation techniques.
+
+---
+
+### **Conclusion of the Ablative Study and Performance Comparison**
+
+The findings from our ablation study and the experiments conducted on large-scale datasets confirm that integrating gradient information and leveraging attention aggregation techniques significantly improve the faithfulness of post-hoc explanation methods for **Vision Transformers**. These results not only highlight the strengths of **SaCo** in providing a more faithful evaluation but also point to the importance of well-designed attention-based methods for explaining complex models like ViTs.
+
+This study underscores the need for more sophisticated explanation methods that combine gradient information with attention mechanisms across multiple layers to generate more accurate and faithful explanations.
+
+### 4. Conclusion
+
+In this work, **SaCo**, a novel evaluation metric for assessing the **faithfulness** of post-hoc explanations in **Vision Transformers (ViTs) is presented**. **SaCo** method leverages **salience-guided comparisons** of pixel subsets to evaluate their contributions to the model’s prediction, offering a more robust benchmark for evaluating explanation methods. The key insights from our experiments and analysis include:
+
+1. **Correlation Analysis**:
+   -  Analysis shows that **SaCo** is essential because existing metrics often overlap in what they capture, but fail to adequately consider the critical aspect of **faithfulness** in explanation methods.
+   
+2. **Unique Identification of Random Attribution**:
+   - Unlike traditional metrics, **SaCo** can identify **Random Attribution** as lacking any meaningful information, offering consistent and reliable results that are free from the dependency on the order in which pixels are perturbed.
+   
+3. **Performance of Attention-Based Methods**:
+   - Results show that **attention-based methods** are generally more faithful in explaining Vision Transformers. Furthermore, their performance can be improved by incorporating **gradient information** and **multi-layer aggregation**, demonstrating the potential for enhancing their effectiveness.
+
+In summary, **SaCo** provides a comprehensive and rigorous evaluation framework for measuring **faithfulness** in Vision Transformer explanations. Our findings contribute valuable insights into the development of explainability techniques for **ViTs**, and pave the way for future research in the field of **explainable AI (XAI)**. 
 
 
-
-
-### References
+### 5. References
 1. Dosovitskiy, A., et al. (2020). "An Image is Worth 16x16 Words: Transformers for Image Recognition at Scale." [arXiv:2010.11929](https://arxiv.org/abs/2010.11929)
 2. Khan, S., et al. (2022). "Transformers in Vision: A Survey." [ACM Computing Surveys](https://dl.acm.org/doi/10.1145/3505244)
 3. Chefer, H., et al. (2021). "Transformer Interpretability Beyond Attention Visualization." [arXiv:2012.09838](https://arxiv.org/abs/2012.09838)
