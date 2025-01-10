@@ -723,7 +723,9 @@ In summary, **SaCo** provides a comprehensive and rigorous evaluation framework 
 12. Zhao, X., et al. (2021). "ATTCAT: Attention Category Visualization for Transformers." [arXiv:2021.03017](https://arxiv.org/abs/2021.03017)
 
 
+### 6. Contact
 
+email: kerem.zengin@metu.edu.tr
 
 
 
